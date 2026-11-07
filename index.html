@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Un messaggio per voi</title>
+  <meta name="description" content="Un breve messaggio e un video da guardare.">
+  <meta name="robots" content="noindex, nofollow">
+  <!-- Sicurezza: la pagina può caricare solo i file suoi e il player di YouTube (versione senza cookie). -->
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'none'; script-src 'self' https://www.youtube.com https://s.ytimg.com; style-src 'self'; media-src 'self'; img-src 'self' data: https://i.ytimg.com; frame-src https://www.youtube-nocookie.com; base-uri 'none'; form-action 'none'">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="stage">
+
+    <!-- Passo 1: il tuo video. Parte solo quando la persona preme play. -->
+    <section id="intro" aria-label="Il mio messaggio">
+      <video id="myVideo" src="video.mp4" controls playsinline preload="metadata"></video>
+      <p class="hint">Premi play per iniziare</p>
+    </section>
+
+    <!-- Passo 2: il video YouTube. Viene caricato solo dopo la fine del primo. -->
+    <section id="yt" class="hidden" aria-label="Video su YouTube">
+      <div class="ratio"><div id="ytPlayer"></div></div>
+    </section>
+
+    <!-- Passo 3: il pulsante compare solo alla fine del video YouTube. -->
+    <a id="cta" class="cta hidden" href="#" target="_blank" rel="noopener noreferrer"></a>
+
+    <noscript><p class="hint">Serve JavaScript attivo per vedere la pagina.</p></noscript>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
