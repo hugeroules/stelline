@@ -15,6 +15,8 @@ video { display: block; width: 100%; height: auto; max-height: 80dvh;
   border-radius: 12px; overflow: hidden; }
 .ratio iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
 
+.endscreen { display: flex; align-items: center; justify-content: center; padding: 16px; }
+
 .hint { margin: 10px 0 0; text-align: center; font-size: .95rem; opacity: .7; }
 
 .cta { display: inline-block; width: 100%; max-width: 420px; text-align: center;

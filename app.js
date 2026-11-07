@@ -1,14 +1,14 @@
 /* ==== DA MODIFICARE (solo questi tre valori) ==== */
 
-// ID del video YouTube che parte dopo il tuo (la parte dopo "youtu.be/", senza "?si=...")
+// ID del video YouTube di presentazione, che parte dopo il tuo (la parte dopo "youtu.be/", senza "?si=...")
 const YT_VIDEO_ID = "HDaaoQ6h_Xc";
 
 // Dove porta il pulsante a fine video. Deve iniziare con https://
-// Per ora rimanda al video stesso su YouTube: sostituiscilo con il link che vuoi.
-const BUTTON_URL = "https://www.youtube.com/watch?v=" + YT_VIDEO_ID;
+// Qui c'è il video finale, senza il codice "?si=..." che identifica chi ha condiviso il link.
+const BUTTON_URL = "https://www.youtube.com/watch?v=jRmKWCcjTbA";
 
 // Testo del pulsante
-const BUTTON_TEXT = "Clicca qui per aprire il link";
+const BUTTON_TEXT = "Ora clicca e goditi il video su YouTube";
 
 /* ================================================ */
 
@@ -18,6 +18,7 @@ const $ = (id) => document.getElementById(id);
 const myVideo = $("myVideo");
 const intro = $("intro");
 const ytBox = $("yt");
+const endBox = $("end");
 const cta = $("cta");
 
 // Sicurezza: il pulsante accetta solo indirizzi https, mai "javascript:" o simili.
@@ -28,17 +29,29 @@ function safeUrl(u) {
   } catch (_) { return null; }
 }
 
+// Schermata nera finale con il pulsante, al posto del player YouTube.
 function showButton() {
   const href = safeUrl(BUTTON_URL);
   if (!href) return;
+  clearTimeout(apiTimer);
+
+  // Se il player era a schermo intero, esci prima di mostrare la schermata finale.
+  if (document.fullscreenElement && document.exitFullscreen) {
+    document.exitFullscreen().catch(() => {});
+  }
+  // Rimuove il player: così YouTube non mostra i video suggeriti.
+  try { if (player && player.destroy) player.destroy(); } catch (_) {}
+  player = null;
+
   cta.href = href;
   cta.textContent = BUTTON_TEXT;   // textContent, non innerHTML
-  cta.classList.remove("hidden");
-  cta.scrollIntoView({ behavior: "smooth", block: "center" });
+  ytBox.classList.add("hidden");
+  endBox.classList.remove("hidden");
+  endBox.scrollIntoView({ behavior: "smooth", block: "center" });
 }
 
 let player = null;
-let apiTimer = null;
+var apiTimer = null;
 
 function startYouTube() {
   intro.classList.add("hidden");
